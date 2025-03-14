@@ -35,7 +35,7 @@ auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 api = tweepy.API(auth)
 
 # Predefined tweet source
-TWEET_FILE = "tweets.txt"
+TWEET_FILE = "sample_tweets.txt"
 
 # CrewAI Agents with OpenAI integration
 tweet_writer = Agent(
@@ -207,7 +207,7 @@ def main():
         use_ai = st.checkbox(
             "Enable AI Tweet Generator",
             value=False,
-            help="Toggle to generate tweets with AI instead of using tweets.txt."
+            help="Toggle to generate tweets with AI instead of using sample_tweets.txt."
         )
         st.sidebar.markdown(
     '<p style="color:red;">Check Above Box to generate responses through AI or else tweets will be fetched from the local storage.</p>', 
