@@ -41,8 +41,8 @@ The application uses a combination of technologies:
 ### Step 1: Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/twitter-posting-bot.git
-cd twitter-posting-bot
+git clone https://github.com/Mr-PU/twitter-agent.git
+cd twitter-agent
 ```
 
 ### Step 2: Create a Virtual Environment (Recommended)
