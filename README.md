@@ -182,7 +182,7 @@ For detailed error information, check:
 
 - [Streamlit](https://streamlit.io/) for the web interface framework
 - [Tweepy](https://www.tweepy.org/) for Twitter API integration
-- [CrewAI](https://www.crewai.io/) for agent-based workflow
+- [CrewAI](https://www.crewai.com/) for agent-based workflow
 - [OpenAI](https://openai.com/) for AI language models
 
 ## Contributing
