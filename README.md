@@ -74,8 +74,14 @@ python-dotenv
 ```
 
 ### Step 4: Set Up Environment Variables
+## Rename the .env.example file to .env:
+# For Windows
+copy .env.example .env
 
-Create a `.env` file in the root directory with the following variables:
+# For macOS/Linux
+cp .env.example .env
+
+Or, Create a `.env` file in the root directory with the following variables:
 
 ```
 # Twitter API Credentials
