@@ -96,7 +96,7 @@ OPENAI_API_KEY=your_openai_api_key
 
 ### Step 5: Create a Tweets File (Optional)
 
-If you plan to use pre-written tweets, create a `tweets.txt` file in the root directory with one tweet per line:
+If you plan to use pre-written tweets, create a `sample_tweets.txt` file in the root directory with one tweet per line:
 
 ```
 This is my first automated tweet! #TwitterBot
