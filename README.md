@@ -1,5 +1,7 @@
 # Twitter Posting Bot
 
+![Twitter Agent Poster](https://github.com/Mr-PU/twitter-agent/blob/main/tw1.jpg?raw=true)
+
 ## Overview
 
 Twitter Posting Bot is an automated tweeting solution built with Streamlit and CrewAI. This application lets you schedule and publish tweets at regular intervals using either pre-written content from a text file or AI-generated tweets powered by OpenAI's GPT models. With customizable posting frequencies, AI prompting capabilities, and a user-friendly interface, it's the perfect tool for maintaining a consistent Twitter presence without manual intervention. Ideal for content creators, social media managers, and businesses looking to streamline their Twitter engagement strategy.
