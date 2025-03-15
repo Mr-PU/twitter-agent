@@ -125,32 +125,37 @@ def post_tweet(content):
 def twitter_agent(interval, use_ai, stop_event, prompt=None, message_queue=None):
     """Main agent loop to post tweets at regular intervals with preview."""
     logging.info("Twitter Posting Agent started.")
-    
     tweets = load_tweets_from_file()
     tweet_index = 0
     
     while not stop_event.is_set():
+        start_time = time.time()
         if use_ai:
             tweet_content = generate_ai_tweet(prompt, message_queue, refine=True)
-            time.sleep(3)
         else:
             if not tweets:
-                logging.warning("No tweets available in file. Switching to AI mode without refinement.")
                 tweet_content = generate_ai_tweet(prompt, message_queue, refine=False)
             else:
                 tweet_content = tweets[tweet_index]
                 tweet_index = (tweet_index + 1) % len(tweets)
                 if message_queue:
                     message_queue.put({"type": "preview", "content": f"Next tweet: {tweet_content}"})
-                time.sleep(3)
         
-            logging.info(f"Attempting to post tweet: {tweet_content}")
-            success, message = post_tweet(tweet_content)
-            if message_queue:
-                message_queue.put({"type": "posted", "content": message})
+        logging.info(f"Attempting to post tweet: {tweet_content}")
+        success, message = post_tweet(tweet_content)
+        if message_queue:
+            message_queue.put({"type": "posted", "content": message})
         
-        sleep_time = max(0, interval - 3)
-        time.sleep(sleep_time)
+        elapsed_time = time.time() - start_time
+        sleep_time = max(0, interval - elapsed_time)
+        logging.info(f"Waiting {sleep_time:.2f} seconds before next tweet.")
+        
+        # Sleep in smaller chunks to allow interruption
+        remaining_time = sleep_time
+        while remaining_time > 0 and not stop_event.is_set():
+            time_to_sleep = min(1.0, remaining_time)  # Sleep for 1 second at a time
+            time.sleep(time_to_sleep)
+            remaining_time -= time_to_sleep
 
 # Streamlit App
 def main():
@@ -161,10 +166,27 @@ def main():
         .sidebar .sidebar-content { background-color: #f0f2f6; padding: 20px; border-radius: 10px; }
         .stButton>button { background-color: #1DA1F2; color: white; border-radius: 5px; }
         .stButton>button:hover { background-color: #0d8bf2; }
-        .preview-box { background-color: #e6f3ff; padding: 10px; border-radius: 5px; margin-bottom: 10px; }
-        .posted-box { background-color: #e6ffe6; padding: 10px; border-radius: 5px; }
+        .preview-box {
+            background-color: #e6f3ff;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            color: #333333; /* Ensure text is visible */
+        }
+        .posted-box {
+            background-color: #e6ffe6;
+            padding: 10px;
+            border-radius: 5px;
+            color: #333333; /* Ensure text is visible */
+        }
         .status-running { color: #28a745; font-weight: bold; }
         .status-stopped { color: #dc3545; font-weight: bold; }
+        /* Adjust for dark mode */
+        @media (prefers-color-scheme: dark) {
+            .preview-box, .posted-box {
+                color: #000; /* White text in dark mode */
+            }
+        }
         </style>
     """, unsafe_allow_html=True)
 
