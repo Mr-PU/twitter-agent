@@ -1,6 +1,6 @@
 # Twitter Posting Bot
 
-![Twitter Agent Poster](https://github.com/Mr-PU/twitter-agent/blob/main/tw1.jpg?raw=true)
+![Twitter Agent Poster](https://github.com/Mr-PU/twitter-agent/blob/main/tw1%20(1).jpg?raw=true)
 
 ## Overview
 
