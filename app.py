@@ -96,7 +96,7 @@ def generate_ai_tweet(prompt=None, message_queue=None, refine=True):
         )
         
         crew.kickoff()
-        tweet_content = tasks[-1].output
+        tweet_content = tasks[-1].output.raw
         
         if refine and message_queue:
             message_queue.put({"type": "preview", "content": f"Next tweet: {tweet_content}"})
@@ -219,12 +219,12 @@ def main():
         interval = st.number_input(
             "Posting Interval (hours)",
             min_value=0.01,
-            max_value=48.0,  # Maximum 24 hours
+            max_value=48.0,  # Maximum 48 hours
             value=1.0,      # Default 1 hour
             step=1.0,       # Increment by 0.1 hours (6 minutes)
             help="Set how often tweets are posted (in hours).",
             # format="%.1f"   # Display with 1 decimal place
-        ) * 3600  # Convert hours to seconds
+        ) * 3600
         
         use_ai = st.checkbox(
             "Enable AI Tweet Generator",
@@ -268,9 +268,9 @@ def main():
             if st.button("Stop", key="stop"):
                 if st.session_state['agent_thread'] is not None and st.session_state['agent_thread'].is_alive():
                     st.session_state['stop_event'].set()
-                    st.session_state['agent_thread'].join(timeout=2)
+                    st.session_state['agent_thread'].join(timeout=3)
                     if not st.session_state['agent_thread'].is_alive():
-                        st.session_state['agent_thread'] = None  # Clear the thread reference
+                        st.session_state['agent_thread'] = None
                         st.success("Agent stopped!")
                     else:
                         st.error("Failed to stop agent cleanly. Check logs.")
