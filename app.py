@@ -34,6 +34,13 @@ auth = tweepy.OAuthHandler(API_KEY, API_SECRET)
 auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 api = tweepy.API(auth)
 
+client = tweepy.Client(
+    consumer_key=API_KEY,
+    consumer_secret=API_SECRET,
+    access_token=ACCESS_TOKEN,
+    access_token_secret=ACCESS_TOKEN_SECRET
+)
+
 # Predefined tweet source
 TWEET_FILE = "sample_tweets.txt"
 
@@ -110,12 +117,12 @@ def generate_ai_tweet(prompt=None, message_queue=None, refine=True):
         return fallback_message
 
 def post_tweet(content):
-    """Post a tweet to Twitter."""
+    """Post a tweet to Twitter using API v2."""
     if len(content) > 280:
         logging.error(f"Tweet exceeds 280 characters: {content}")
         return False, f"Error: Tweet exceeds 280 characters ({len(content)} chars)"
     try:
-        api.update_status(content)
+        response = client.create_tweet(text=content)
         logging.info(f"Successfully posted tweet: {content}")
         return True, f"Tweet posted: {content}"
     except tweepy.TweepyException as e:
